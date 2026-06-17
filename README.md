@@ -1,4 +1,4 @@
-# AI Impact & Decision Intelligence Engine — v1.0
+﻿# AI Impact & Decision Intelligence Engine — v1.0
 
 Most AI systems make decisions.
 
@@ -242,10 +242,12 @@ Complete — v1.0
 
 ## System Context
 
-This project is part of a larger AI decision system:
+Part of a five-engine AI decision system, built in sequence:
 
-- **[Reliability Engine](https://github.com/kobescak-kristian/ai-workflow-reliability-engine)** → prevents invalid AI outputs from entering workflows  
-- **[Decision Engine](https://github.com/kobescak-kristian/ai-decision-engine-feedback)** → tracks outcomes and evaluates decision correctness  
-- Impact Engine → measures financial impact and optimizes thresholds  
+- **[Reliability Engine](https://github.com/kobescak-kristian/ai-reliability-engine)** → prevents invalid AI outputs from entering workflows
+- **[Decision Engine](https://github.com/kobescak-kristian/ai-decision-engine)** → tracks outcomes and evaluates whether decisions were correct
+- **Impact Engine** → measures financial impact and tunes thresholds *(this system)*
+- **[Execution Engine](https://github.com/kobescak-kristian/ai-execution-engine)** → runs the workflow deterministically and recommends improvements
+- **[Context Engine](https://github.com/kobescak-kristian/ai-context-engine)** → grounds decisions in retrieved precedent and explains them
 
-→ Complete system: validation → evaluation → financial impact
+→ Five standalone engines covering validation, decision evaluation, financial impact, workflow execution, and retrieval-grounded decision support.
