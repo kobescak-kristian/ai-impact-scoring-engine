@@ -1,4 +1,4 @@
-﻿# AI Impact & Decision Intelligence Engine — v1.0
+﻿# AI Impact Scoring Engine — v1.0
 
 Most AI systems make decisions.
 
@@ -161,7 +161,7 @@ The AI layer receives only the final metrics object — it cannot alter, invent,
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/kobescak-kristian/ai-impact-decision-intelligence-engine
+git clone https://github.com/kobescak-kristian/ai-impact-scoring-engine
 
 # 2. Create and activate virtual environment (Python 3.12 recommended)
 py -3.12 -m venv venv
