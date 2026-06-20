@@ -78,7 +78,7 @@ def run_analysis():
     for i, rec in enumerate(result.recommendations, 1):
         print(f"\n  {i}. Action: {rec.action}")
         if rec.from_value is not None:
-            print(f"     From:   {rec.from_value}  →  To: {rec.to_value}")
+            print(f"     From:   {rec.from_value}  ->  To: {rec.to_value}")
         print(f"     Reason: {rec.reason}")
         print(f"     Effect: {rec.expected_effect}")
         print(f"     Trade-off: {rec.tradeoff}")
