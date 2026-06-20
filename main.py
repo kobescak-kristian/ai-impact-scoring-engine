@@ -6,7 +6,7 @@ logger = get_logger(__name__)
 
 
 def main():
-    logger.info("Starting AI Impact Engine")
+    logger.info("Starting AI Impact Scoring Engine")
     init_db()
     uvicorn.run("api:app", host="0.0.0.0", port=8000, reload=True)
 

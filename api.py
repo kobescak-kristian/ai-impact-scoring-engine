@@ -11,7 +11,7 @@ from utils.logger import get_logger
 logger = get_logger(__name__)
 
 app = FastAPI(
-    title="AI Impact Engine",
+    title="AI Impact Scoring Engine",
     description="Turns AI lead qualification decisions into measurable financial impact and actionable recommendations.",
     version="1.0.0",
 )

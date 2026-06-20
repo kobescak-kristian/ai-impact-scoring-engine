@@ -164,8 +164,11 @@ The AI layer receives only the final metrics object — it cannot alter, invent,
 git clone https://github.com/kobescak-kristian/ai-impact-scoring-engine
 
 # 2. Create and activate virtual environment (Python 3.12 recommended)
+# Windows:
 py -3.12 -m venv venv
 venv\Scripts\activate
+# macOS/Linux:
+# python3.12 -m venv venv && source venv/bin/activate
 
 # 3. Install dependencies
 pip install -r requirements.txt
@@ -193,6 +196,32 @@ Then open: `http://localhost:8000/docs`
 | GET | `/impact/{lead_id}` | Per-lead financial impact detail |
 | POST | `/load` | Load lead records into the database |
 | GET | `/health` | Health check |
+
+### `/load` — example request body
+
+```json
+[
+  {
+    "lead_id": "L001",
+    "decision": "send_to_sales",
+    "confidence_score": 0.87,
+    "outcome": "converted",
+    "lead_value": 4200,
+    "customer_type": "enterprise",
+    "value_tier": "high",
+    "source": "inbound",
+    "timestamp": "2024-01-03T09:15:00"
+  }
+]
+```
+
+Valid `decision` values: `send_to_sales`, `archived`, `manual_review`
+
+Valid `outcome` values: `converted`, `not_converted`, `later_converted`, `converted_delayed`, `pending`
+
+`pending` leads are accepted and stored, but excluded from all financial calculations until an outcome is recorded.
+
+Optional fields: `customer_type` (`enterprise`, `smb`, `individual`), `value_tier` (`high`, `medium`, `low`), `source`, `timestamp`
 
 ---
 
@@ -247,7 +276,7 @@ Part of a five-engine AI decision system:
 - **[AI Reliability Engine](https://github.com/kobescak-kristian/ai-reliability-engine)** - prevents invalid AI outputs from entering workflows
 - **[AI Decision Engine](https://github.com/kobescak-kristian/ai-decision-engine)** - tracks outcomes and evaluates whether decisions were correct
 - **AI Impact Scoring Engine** - measures the financial impact of decisions and tunes thresholds *(this system)*
-- **[AI Execution Engine](https://github.com/kobescak-kristian/ai-execution-engine)** - executes the workflow and recommends improvements
 - **[AI Context Engine](https://github.com/kobescak-kristian/ai-context-engine)** - grounds decisions in retrieved precedent and explains them
+- **[AI Execution Engine](https://github.com/kobescak-kristian/ai-execution-engine)** - executes the workflow and recommends improvements
 
 Complete system: validation → evaluation → financial impact → grounded explanation → execution

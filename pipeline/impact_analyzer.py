@@ -10,7 +10,7 @@ logger = get_logger(__name__)
 # ── Prompt Builder ─────────────────────────────────────────────────────────────
 
 def _build_prompt(metrics: ImpactMetrics) -> str:
-    return f"""You are a business intelligence analyst reviewing the financial performance of an AI lead qualification system.
+    return f"""You are a business intelligence analyst reviewing the financial performance of an AI impact scoring system that evaluates the financial consequences of AI lead routing decisions.
 
 You have been given the following deterministic metrics. Do NOT invent numbers. Only interpret what is provided.
 

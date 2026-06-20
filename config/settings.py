@@ -5,7 +5,7 @@ from typing import Optional
 class Settings(BaseSettings):
     openai_api_key: Optional[str] = None
     openai_model: str = "gpt-4o-mini"
-    use_simulation_fallback: bool = False
+    use_simulation_fallback: bool = True
     database_url: str = "sqlite:///./impact_engine.db"
     log_level: str = "INFO"
 
