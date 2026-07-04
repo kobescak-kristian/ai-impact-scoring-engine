@@ -16,7 +16,7 @@ This system measures the financial impact of AI lead routing decisions and recom
 
 ---
 
-## The Problem
+## Problem
 
 AI systems route leads (send to sales, archive, manual review), but almost no system measures the **financial consequence of those decisions**.
 
@@ -49,7 +49,7 @@ It shows:
 
 ---
 
-## What This System Does
+## Solution
 
 This system acts as a **decision intelligence layer** on top of an existing AI pipeline.
 
@@ -266,6 +266,16 @@ The evaluator runs full analysis regardless of how many leads have outcomes reco
 ## Status
 
 Complete — v1.0
+
+---
+
+## Version Log
+
+| Version | Date | Change |
+|---------|------|--------|
+| v1.0 | 2026-04-23 | Initial release — AI Impact & Decision Intelligence Engine (financial evaluation of AI lead-routing decisions) |
+
+No version bump has been declared since initial release. Subsequent commits (renaming to "AI Impact Scoring Engine", System Context updates, audit fixes) are documentation and consistency changes under the same v1.0 — see `git log` for full commit history.
 
 ---
 
