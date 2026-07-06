@@ -66,9 +66,9 @@ It evaluates them and translates them into measurable financial consequences.
 ## Outcome (Simulated)
 
 - 75 leads processed
-- Revenue generated: €165,170
+- Revenue generated: €168,300
 - Revenue lost: €49,060
-- Net impact: €116,110
+- Net impact: €119,240
 - Conversion rate: 41.3%
 - False positive rate: 45.2%
 - Missed opportunity rate: 44.4%
@@ -275,6 +275,7 @@ Complete — v1.0
 |---------|------|--------|
 | v1.0 | 2026-04-23 | Initial release — AI Impact & Decision Intelligence Engine (financial evaluation of AI lead-routing decisions) |
 | v1.0 | 2026-07-06 | Audit fix (M2): routing table completed to 15/15 valid (decision, outcome) pairs — `("archived", "converted_delayed")` now classifies as `missed_opportunity`; unmapped combinations now fail loud instead of silently returning `unknown`. Demo dataset has no such record, so headline numbers are unchanged. |
+| v1.0 | 2026-07-06 | Audit fix (M1+M3, Option A): aggregate layer double-counted the delay penalty — delayed leads entered `total_revenue_generated` net-of-penalty while the same penalty was also itemized in `total_revenue_lost`. Delayed revenue now enters gross, with the penalty appearing exactly once. Aggregate sums also now use `settings.delayed_conversion_penalty` and `settings.missed_opportunity_multiplier` instead of a hardcoded constant, so config changes move per-lead and aggregate figures identically. Net impact now reconciles exactly with the sum of per-lead `financial_impact` (verified: both €119,240 on the demo dataset). Revenue generated and net impact changed; revenue lost and all rates are unchanged. |
 
 No version bump has been declared since initial release. Subsequent commits (renaming to "AI Impact Scoring Engine", System Context updates, audit fixes) are documentation and consistency changes under the same v1.0 — see `git log` for full commit history.
 

@@ -1,4 +1,5 @@
 from typing import List
+from config.settings import settings
 from models.schemas import ImpactMetrics
 from pipeline.outcome_handler import compute_lead_impact
 from utils.logger import get_logger
@@ -28,14 +29,19 @@ def evaluate_impact(leads: List[dict]) -> tuple[ImpactMetrics, List[dict]]:
     # Delayed conversion: revenue realised but penalised — track separately
     delayed_leads = [l for l in enriched if l["impact_type"] == "delayed_conversion"]
     delayed_opportunity_value = sum(
-        l["lead_value"] * 0.10 for l in delayed_leads  # penalty portion only
+        l["lead_value"] * settings.delayed_conversion_penalty for l in delayed_leads
     )
-    # Add delayed revenue to generated (net of penalty already in financial_impact)
-    total_revenue_generated += sum(l["financial_impact"] for l in delayed_leads)
+    # Delayed revenue enters generated at gross lead_value — the penalty is
+    # itemized once in delayed_opportunity_value (total_revenue_lost), not
+    # baked into both figures. Net impact then reconciles with the per-lead
+    # financial_impact (lead_value * (1 - penalty)) computed in outcome_handler.
+    total_revenue_generated += sum(l["lead_value"] for l in delayed_leads)
 
     # ── Revenue lost ───────────────────────────────────────────────────────────
     missed_leads = [l for l in enriched if l["impact_type"] == "missed_opportunity"]
-    missed_opportunity_value = sum(l["lead_value"] for l in missed_leads)
+    missed_opportunity_value = sum(
+        l["lead_value"] * settings.missed_opportunity_multiplier for l in missed_leads
+    )
 
     fp_leads = [l for l in enriched if l["impact_type"] == "false_positive"]
     manual_no_value_leads = [l for l in enriched if l["impact_type"] == "manual_no_value"]
