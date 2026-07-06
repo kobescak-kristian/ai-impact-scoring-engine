@@ -12,6 +12,7 @@ IMPACT_ROUTING_TABLE = {
     ("archived",       "not_converted"):        "correct_archive",
     ("archived",       "later_converted"):      "missed_opportunity",
     ("archived",       "converted"):            "missed_opportunity",
+    ("archived",       "converted_delayed"):    "missed_opportunity",
     ("manual_review",  "converted"):            "revenue_generated",
     ("manual_review",  "not_converted"):        "manual_no_value",
     ("manual_review",  "converted_delayed"):    "delayed_conversion",

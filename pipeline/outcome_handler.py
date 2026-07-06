@@ -53,9 +53,14 @@ def compute_lead_impact(lead: dict) -> dict:
         notes = "Outcome pending — no impact calculated yet"
 
     else:
-        financial_impact = 0.0
-        notes = f"Unknown impact type: {impact_type}"
-        logger.warning(f"Unknown impact type for lead {lead.get('lead_id')}")
+        # An "unknown" impact_type means (decision, outcome) is missing from
+        # IMPACT_ROUTING_TABLE. Silently defaulting to 0.0 would let it sit in
+        # evaluated denominators uncounted — fail loud instead so a routing-table
+        # gap is caught immediately rather than quietly skewing rates.
+        raise ValueError(
+            f"Unmapped decision/outcome combination for lead {lead.get('lead_id')}: "
+            f"decision={decision!r}, outcome={outcome!r}. Add it to IMPACT_ROUTING_TABLE."
+        )
 
     return {
         **lead,

@@ -274,6 +274,7 @@ Complete — v1.0
 | Version | Date | Change |
 |---------|------|--------|
 | v1.0 | 2026-04-23 | Initial release — AI Impact & Decision Intelligence Engine (financial evaluation of AI lead-routing decisions) |
+| v1.0 | 2026-07-06 | Audit fix (M2): routing table completed to 15/15 valid (decision, outcome) pairs — `("archived", "converted_delayed")` now classifies as `missed_opportunity`; unmapped combinations now fail loud instead of silently returning `unknown`. Demo dataset has no such record, so headline numbers are unchanged. |
 
 No version bump has been declared since initial release. Subsequent commits (renaming to "AI Impact Scoring Engine", System Context updates, audit fixes) are documentation and consistency changes under the same v1.0 — see `git log` for full commit history.
 

@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(".")
-REQUIRED_README_SECTIONS = ["## Problem", "## Solution", "## System", "## Outcome", "## Version Log"]
+REQUIRED_README_SECTIONS = ["## Problem", "## Solution", "## Architecture", "## Outcome", "## Version Log"]
 BANNED_WITHOUT_TRIGGER = ["SYSTEM_WALKTHROUGH.md", "CHANGELOG.md", "RUNBOOK.md",
                           "PRODUCTION_READINESS.md", "THREAT_MODEL.md", "MONITORING.md",
                           "INCIDENT_RESPONSE.md", "TEST_MATRIX.md"]
@@ -17,7 +17,11 @@ if not readme.exists():
 else:
     text = readme.read_text(encoding="utf-8")
     for section in REQUIRED_README_SECTIONS:
-        if section not in text:
+        # Match an actual heading line (optionally followed by more heading text,
+        # e.g. "## Outcome (Simulated)"), not any occurrence of the substring
+        # anywhere in the document — a prior version matched "## System" against
+        # the unrelated "## System Context" footer and passed on that coincidence.
+        if not re.search(rf"^{re.escape(section)}\b", text, re.MULTILINE):
             errors.append(f"README missing section: {section}")
 
 adr = ROOT / "adr"
