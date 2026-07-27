@@ -1,5 +1,7 @@
 ﻿# AI Impact Scoring Engine — v1.0
 
+[![CI](https://github.com/kobescak-kristian/ai-impact-scoring-engine/actions/workflows/ci.yml/badge.svg)](https://github.com/kobescak-kristian/ai-impact-scoring-engine/actions/workflows/ci.yml)
+
 Most AI systems make decisions.
 
 Very few know if those decisions were actually correct.
@@ -184,6 +186,8 @@ python main.py
 ```
 
 Then open: `http://localhost:8000/docs`
+
+The keyless simulation demo and the live server endpoints run in CI on every push — Ubuntu, macOS and Windows, Python 3.12 and 3.14 — asserting the committed lead counts and impact metrics.
 
 ---
 
