@@ -5,11 +5,25 @@ import sys
 from pathlib import Path
 
 ROOT = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(".")
-REQUIRED_README_SECTIONS = ["## Problem", "## Solution", "## Architecture", "## Outcome", "## Version Log"]
+# Reverted 2026-09-19 (Q-72(f), owner Option A): "## Architecture" was an
+# unreviewed 2026-07-06 substitution for the canonical "## System" heading,
+# bundled into an unrelated commit with no decision record. The anchored-
+# regex fix from that same commit is preserved below unchanged.
+REQUIRED_README_SECTIONS = ["## Problem", "## Solution", "## System", "## Outcome", "## Version Log"]
 BANNED_WITHOUT_TRIGGER = ["SYSTEM_WALKTHROUGH.md", "CHANGELOG.md", "RUNBOOK.md",
                           "PRODUCTION_READINESS.md", "THREAT_MODEL.md", "MONITORING.md",
-                          "INCIDENT_RESPONSE.md", "TEST_MATRIX.md"]
+                          "INCIDENT_RESPONSE.md", "TEST_MATRIX.md",
+                          # Propagated 2026-09-19 (Q-72(f) validator convergence):
+                          # was canonical + sentinel only as of 2026-08-04; this
+                          # repo's live-file precondition (no uncited root file
+                          # under any of these six names) was checked and is clear.
+                          "SLO.md", "MODEL_CARD.md", "DATA_CONTRACT.md",
+                          "DATA_RETENTION_POLICY.md", "SYSTEM_CARD.md", "SPEC.md"]
 errors = []
+
+# Build-repo STATE rule: STATE.md is part of the scaffold.
+if not (ROOT / "STATE.md").exists():
+    errors.append("STATE.md missing (Build-repo STATE rule)")
 
 readme = ROOT / "README.md"
 if not readme.exists():
@@ -52,9 +66,7 @@ else:
                        if "template" not in f.name.lower()]
     count = len(decision_files)
     if count == 0:
-        errors.append("adr/ (or decisions/) has no decisions (need 1-5)")
-    elif count > 5:
-        errors.append(f"adr/ (or decisions/) has {count} decisions (cap is 5 - decisions were not decisions)")
+        errors.append("adr/ (or decisions/) has no decisions (need at least 1)")
 
 for banned in BANNED_WITHOUT_TRIGGER:
     if (ROOT / banned).exists():

@@ -80,7 +80,7 @@ It evaluates them and translates them into measurable financial consequences.
 
 ---
 
-## Architecture
+## System
 
 ![Impact Architecture](impact_architecture.png)
 
