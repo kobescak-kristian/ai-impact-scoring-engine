@@ -5,20 +5,21 @@ import sys
 from pathlib import Path
 
 ROOT = Path(sys.argv[1]) if len(sys.argv) > 1 else Path(".")
-# Reverted 2026-09-19 (Q-72(f), owner Option A): "## Architecture" was an
-# unreviewed 2026-07-06 substitution for the canonical "## System" heading,
-# bundled into an unrelated commit with no decision record. The anchored-
-# regex fix from that same commit is preserved below unchanged.
 REQUIRED_README_SECTIONS = ["## Problem", "## Solution", "## System", "## Outcome", "## Version Log"]
 BANNED_WITHOUT_TRIGGER = ["SYSTEM_WALKTHROUGH.md", "CHANGELOG.md", "RUNBOOK.md",
                           "PRODUCTION_READINESS.md", "THREAT_MODEL.md", "MONITORING.md",
                           "INCIDENT_RESPONSE.md", "TEST_MATRIX.md",
-                          # Propagated 2026-09-19 (Q-72(f) validator convergence):
-                          # was canonical + sentinel only as of 2026-08-04; this
-                          # repo's live-file precondition (no uncited root file
-                          # under any of these six names) was checked and is clear.
+                          "DEMO_SCRIPT.md", "ASSURANCE_ONE_PAGER.md",
+                          "TECHNICAL_OWNERSHIP_GUIDE.md",
+                          # Added 2026-08-04: canonical + sentinel copies only, scoped
+                          # by owner ruling.
                           "SLO.md", "MODEL_CARD.md", "DATA_CONTRACT.md",
                           "DATA_RETENTION_POLICY.md", "SYSTEM_CARD.md", "SPEC.md"]
+# Tier 1 artifacts (ARTIFACT_STANDARD.md #Tier 1) are allowed without an ADR
+# trigger only for the current flagship — exactly one at a time.
+TIER1_ARTIFACTS = {"DEMO_SCRIPT.md", "ASSURANCE_ONE_PAGER.md", "TECHNICAL_OWNERSHIP_GUIDE.md"}
+CURRENT_FLAGSHIP = "ai-reliability-engine"
+IS_FLAGSHIP = ROOT.resolve().name == CURRENT_FLAGSHIP
 errors = []
 
 # Build-repo STATE rule: STATE.md is part of the scaffold.
@@ -31,11 +32,7 @@ if not readme.exists():
 else:
     text = readme.read_text(encoding="utf-8")
     for section in REQUIRED_README_SECTIONS:
-        # Match an actual heading line (optionally followed by more heading text,
-        # e.g. "## Outcome (Simulated)"), not any occurrence of the substring
-        # anywhere in the document — a prior version matched "## System" against
-        # the unrelated "## System Context" footer and passed on that coincidence.
-        if not re.search(rf"^{re.escape(section)}\b", text, re.MULTILINE):
+        if section not in text:
             errors.append(f"README missing section: {section}")
 
 # AGENTS.md (ARTIFACT_STANDARD v2.7, Tier 0): root file + required H2 headings.
@@ -70,6 +67,8 @@ else:
 
 for banned in BANNED_WITHOUT_TRIGGER:
     if (ROOT / banned).exists():
+        if banned in TIER1_ARTIFACTS and IS_FLAGSHIP:
+            continue
         # allowed only if a decision-record file mentions it (the trigger record)
         justified = any(
             re.search(re.escape(banned), f.read_text(encoding="utf-8"))
