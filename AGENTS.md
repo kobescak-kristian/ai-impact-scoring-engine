@@ -22,6 +22,8 @@ evaluation layer that sits on top of an existing lead-routing pipeline. It:
 It does not make the upstream business routing decision. It evaluates
 decisions made elsewhere.
 
+Classification: PROJECT.
+
 ## Authority and conflict handling
 
 Each surface is authoritative for one kind of fact:
