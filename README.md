@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/kobescak-kristian/ai-impact-scoring-engine/actions/workflows/ci.yml/badge.svg)](https://github.com/kobescak-kristian/ai-impact-scoring-engine/actions/workflows/ci.yml)
 
+Measures financial impact of AI lead-routing decisions and recommends threshold changes from simulated outcome data.
+
 Most AI systems make decisions.
 
 Very few know if those decisions were actually correct.
