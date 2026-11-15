@@ -1,3 +1,4 @@
+# The entries below are code lines that read an API key from an environment variable. No key is stored in this repository.
 # adjudicated-secrets
 config/settings.py |     openai_api_key: Optional[str] = None | config/settings.py:6 |     openai_api_key: Optional[str] = None | owner ruling 2026-08-04
 pipeline/impact_analyzer.py |     client = OpenAI(api_key=settings.openai_api_key) | config/settings.py:6 |     openai_api_key: Optional[str] = None | owner ruling 2026-08-04
